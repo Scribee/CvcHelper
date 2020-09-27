@@ -14,9 +14,14 @@ out
 .idea
 
 # gradle
-build
+build/
 .gradle
+gradlew
+build.gradle
+gradlew.bat
 
 # other
 eclipse
 run
+cvc textures/
+*.txt
