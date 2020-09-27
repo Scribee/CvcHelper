@@ -1,0 +1,16 @@
+[
+{
+  "modid": "cvchelper",
+  "name": "CvC Helper",
+  "description": "Counts killstreaks for you in Cops and Crims.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Scribee"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

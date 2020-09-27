@@ -1,0 +1,468 @@
+{
+  "mcgo.random.headshot_shooter": {
+    "category": "master",
+    "sounds": [
+      "mcgo/random/headshot_shooter"
+    ]
+  },
+  "mcgo.random.headshot_victim": {
+    "category": "master",
+    "sounds": [
+      "mcgo/random/headshot_victim"
+    ]
+  },
+  "mcgo.random.reload_end": {
+    "category": "master",
+    "sounds": [
+      "mcgo/random/reload_end"
+    ]
+  },
+  "mcgo.random.reload_start": {
+    "category": "master",
+    "sounds": [
+      "mcgo/random/reload_start"
+    ]
+  },
+  "mcgo.random.reload_fire": {
+    "category": "master",
+    "sounds": [
+      "mcgo/random/reload_fire"
+    ]
+  },
+  "mcgo.callouts.letsgoin": {
+    "category": "master",
+    "sounds": [
+      "mcgo/callouts/letsgoin32"
+    ]
+  },
+  "mcgo.weapons.shotgunshot": {
+    "category": "master",
+    "sounds": [
+      "mcgo/weapons/shotgunshot01"
+    ]
+  },
+  "mcgo.gamesounds.bombdroppedyourteam": {
+    "category": "master",
+    "sounds": [
+      "mcgo/gamesounds/bombdroppedyourteam"
+    ]
+  },
+  "mcgo.taunts.tooeasy": {
+    "category": "master",
+    "sounds": [
+      "mcgo/taunts/tooeasy"
+    ]
+  },
+  "mcgo.callouts.negative": {
+    "category": "master",
+    "sounds": [
+      "mcgo/callouts/negative"
+    ]
+  },
+  "mcgo.gamesounds.winteamcreepers": {
+    "category": "master",
+    "sounds": [
+      "mcgo/gamesounds/winteamcreepers"
+    ]
+  },
+  "mcgo.taunts.poparound": {
+    "category": "master",
+    "sounds": [
+      "mcgo/taunts/poparound"
+    ]
+  },
+  "mcgo.gamesounds.winteamocelots": {
+    "category": "master",
+    "sounds": [
+      "mcgo/gamesounds/winteamocelots"
+    ]
+  },
+  "mcgo.gamesounds.secondsremain": {
+    "category": "master",
+    "sounds": [
+      "mcgo/gamesounds/30secondsremain"
+    ]
+  },
+  "mcgo.weapons.carbineshot": {
+    "category": "master",
+    "sounds": [
+      "mcgo/weapons/carbineshot01"
+    ]
+  },
+  "mcgo.throwables.explodegrenade": {
+    "category": "master",
+    "sounds": [
+      "mcgo/throwables/explodegrenade"
+    ]
+  },
+  "mcgo.gamesounds.throwingflashbang": {
+    "category": "master",
+    "sounds": [
+      "mcgo/gamesounds/throwingflashbang"
+    ]
+  },
+  "mcgo.weapons.snipershot": {
+    "category": "master",
+    "sounds": [
+      "mcgo/weapons/snipershot01"
+    ]
+  },
+  "mcgo.taunts.mvp": {
+    "category": "master",
+    "sounds": [
+      "mcgo/taunts/mvp"
+    ]
+  },
+  "mcgo.gamesounds.wilhelm": {
+    "category": "master",
+    "sounds": [
+      "mcgo/gamesounds/wilhelm"
+    ]
+  },
+  "mcgo.gamesounds.criminalswinthegame": {
+    "category": "master",
+    "sounds": [
+      "mcgo/gamesounds/criminalswinthegame"
+    ]
+  },
+  "mcgo.gamesounds.throwinggrenade": {
+    "category": "master",
+    "sounds": [
+      "mcgo/gamesounds/throwinggrenade"
+    ]
+  },
+  "mcgo.taunts.thatallyougot": {
+    "category": "master",
+    "sounds": [
+      "mcgo/taunts/thatallyougot"
+    ]
+  },
+  "mcgo.taunts.behindyou": {
+    "category": "master",
+    "sounds": [
+      "mcgo/taunts/behindyou"
+    ]
+  },
+  "mcgo.callouts.gotaweaponforyou": {
+    "category": "master",
+    "sounds": [
+      "mcgo/callouts/gotaweaponforyou"
+    ]
+  },
+  "mcgo.taunts.hypixel": {
+    "category": "master",
+    "sounds": [
+      "mcgo/taunts/hypixel"
+    ]
+  },
+  "mcgo.gamesounds.copswinthegame": {
+    "category": "master",
+    "sounds": [
+      "mcgo/gamesounds/copswinthegame"
+    ]
+  },
+  "mcgo.gamesounds.oneenemyleft": {
+    "category": "master",
+    "sounds": [
+      "mcgo/gamesounds/oneenemyleft"
+    ]
+  },
+  "random.eat": {
+    "category": "master",
+    "sounds": [
+      "random/eat1",
+      "random/eat2",
+      "random/eat3"
+    ]
+  },
+  "mcgo.shop.shopmenuclose": {
+    "category": "master",
+    "sounds": [
+      "mcgo/shop/shopmenuclose"
+    ]
+  },
+  "mcgo.shop.shopbuyitem": {
+    "category": "master",
+    "sounds": [
+      "mcgo/shop/shopbuyitem"
+    ]
+  },
+  "mcgo.taunts.goodgame": {
+    "category": "master",
+    "sounds": [
+      "mcgo/taunts/goodgame"
+    ]
+  },
+  "mcgo.taunts.peekaboo": {
+    "category": "master",
+    "sounds": [
+      "mcgo/taunts/peekaboo"
+    ]
+  },
+  "mcgo.gamesounds.droppedagun": {
+    "category": "master",
+    "sounds": [
+      "mcgo/gamesounds/droppedagun"
+    ]
+  },
+  "mcgo.taunts.mymother": {
+    "category": "master",
+    "sounds": [
+      "mcgo/taunts/mymother"
+    ]
+  },
+  "mcgo.gamesounds.bombdefused": {
+    "category": "master",
+    "sounds": [
+      "mcgo/gamesounds/bombdefused"
+    ]
+  },
+  "mcgo.gamesounds.oneteammateleft": {
+    "category": "master",
+    "sounds": [
+      "mcgo/gamesounds/oneteammateleft"
+    ]
+  },
+  "mcgo.callouts.followme": {
+    "category": "master",
+    "sounds": [
+      "mcgo/callouts/followme"
+    ]
+  },
+  "mcgo.taunts.rekt": {
+    "category": "master",
+    "sounds": [
+      "mcgo/taunts/rekt"
+    ]
+  },
+  "mcgo.gamesounds.reloading": {
+    "category": "master",
+    "sounds": [
+      "mcgo/gamesounds/reloading1",
+      "mcgo/gamesounds/reloading2",
+      "mcgo/gamesounds/reloading3"
+    ]
+  },
+  "mcgo.callouts.letstakeitslow": {
+    "category": "master",
+    "sounds": [
+      "mcgo/callouts/letstakeitslow"
+    ]
+  },
+  "mcgo.weapons.smgshot": {
+    "category": "master",
+    "sounds": [
+      "mcgo/weapons/smgshot01"
+    ]
+  },
+  "mcgo.callouts.letsrush": {
+    "category": "master",
+    "sounds": [
+      "mcgo/callouts/letsrush"
+    ]
+  },
+  "mcgo.gamesounds.swappingsides": {
+    "category": "master",
+    "sounds": [
+      "mcgo/gamesounds/swappingsides"
+    ]
+  },
+  "mcgo.weapons.akshot": {
+    "category": "master",
+    "sounds": [
+      "mcgo/weapons/ak47shot01"
+    ]
+  },
+  "mcgo.callouts.thanks": {
+    "category": "master",
+    "sounds": [
+      "mcgo/callouts/thanks"
+    ]
+  },
+  "mcgo.throwables.explodeflashbang": {
+    "category": "master",
+    "sounds": [
+      "mcgo/throwables/explodeflashbang"
+    ]
+  },
+  "mcgo.gamesounds.bombdroppedenemyteam": {
+    "category": "master",
+    "sounds": [
+      "mcgo/gamesounds/bombdroppedenemyteam"
+    ]
+  },
+  "mcgo.callouts.savingmymoney": {
+    "category": "master",
+    "sounds": [
+      "mcgo/callouts/savingmymoney"
+    ]
+  },
+  "mcgo.callouts.stackup": {
+    "category": "master",
+    "sounds": [
+      "mcgo/callouts/stackup"
+    ]
+  },
+  "mcgo.throwables.explodefirebomb": {
+    "category": "master",
+    "sounds": [
+      "mcgo/throwables/explodefirebomb"
+    ]
+  },
+  "mcgo.gamesounds.throwingsmoke": {
+    "category": "master",
+    "sounds": [
+      "mcgo/gamesounds/throwingsmoke"
+    ]
+  },
+  "mcgo.callouts.rogerthat": {
+    "category": "master",
+    "sounds": [
+      "mcgo/callouts/rogerthat"
+    ]
+  },
+  "mcgo.weapons.knifeswing": {
+    "category": "master",
+    "sounds": [
+      "mcgo/weapons/knifeswing01"
+    ]
+  },
+  "mcgo.weapons.magnumshot": {
+    "category": "master",
+    "sounds": [
+      "mcgo/weapons/magnumshot01"
+    ]
+  },
+  "mcgo.shop.shopcantbuy": {
+    "category": "master",
+    "sounds": [
+      "mcgo/shop/shopcantbuy"
+    ]
+  },
+  "mcgo.throwables.grenadethrow": {
+    "category": "master",
+    "sounds": [
+      "mcgo/throwables/grenadethrow"
+    ]
+  },
+  "mcgo.gamesounds.bombbeep": {
+    "category": "master",
+    "sounds": [
+      "mcgo/gamesounds/bombbeep"
+    ]
+  },
+  "mcgo.gamesounds.headshotkill": {
+    "category": "master",
+    "sounds": [
+      "mcgo/gamesounds/headshotkill"
+    ]
+  },
+  "mcgo.throwables.explodesmoke": {
+    "category": "master",
+    "sounds": [
+      "mcgo/throwables/explodesmoke"
+    ]
+  },
+  "mcgo.gamesounds.bombplanted": {
+    "category": "master",
+    "sounds": [
+      "mcgo/gamesounds/bombplanted"
+    ]
+  },
+  "mcgo.callouts.coverme": {
+    "category": "master",
+    "sounds": [
+      "mcgo/callouts/coverme"
+    ]
+  },
+  "mcgo.callouts.goingtob": {
+    "category": "master",
+    "sounds": [
+      "mcgo/callouts/goingtob"
+    ]
+  },
+  "mcgo.gamesounds.pickedupthebomb": {
+    "category": "master",
+    "sounds": [
+      "mcgo/gamesounds/pickedupthebomb"
+    ]
+  },
+  "mcgo.gamesounds.roundstart": {
+    "category": "master",
+    "sounds": [
+      "mcgo/gamesounds/roundstart1",
+      "mcgo/gamesounds/roundstart2",
+      "mcgo/gamesounds/roundstart3",
+      "mcgo/gamesounds/roundstart4"
+    ]
+  },
+  "mcgo.callouts.youtaketheotherside": {
+    "category": "master",
+    "sounds": [
+      "mcgo/callouts/youtaketheotherside"
+    ]
+  },
+  "mcgo.gamesounds.throwingdecoy": {
+    "category": "master",
+    "sounds": [
+      "mcgo/gamesounds/throwingdecoy"
+    ]
+  },
+  "mcgo.callouts.needaweapon": {
+    "category": "master",
+    "sounds": [
+      "mcgo/callouts/needaweapon"
+    ]
+  },
+  "mcgo.gamesounds.throwingfirebomb": {
+    "category": "master",
+    "sounds": [
+      "mcgo/gamesounds/throwingfirebomb"
+    ]
+  },
+  "mcgo.shop.boughtarmor": {
+    "category": "master",
+    "sounds": [
+      "mcgo/shop/boughtarmor"
+    ]
+  },
+  "mcgo.gamesounds.spawnedin": {
+    "category": "master",
+    "sounds": [
+      "mcgo/gamesounds/spawnedin"
+    ]
+  },
+  "mcgo.shop.shopmenuopen": {
+    "category": "master",
+    "sounds": [
+      "mcgo/shop/shopmenuopen"
+    ]
+  },
+  "random.bowhit": {
+    "category": "master",
+    "sounds": [
+      "random/bowhit1",
+      "random/bowhit2",
+      "random/bowhit3",
+      "random/bowhit4"
+    ]
+  },
+  "mcgo.taunts.knifefight": {
+    "category": "master",
+    "sounds": [
+      "mcgo/taunts/knifefight"
+    ]
+  },
+  "mcgo.weapons.pistolshot": {
+    "category": "master",
+    "sounds": [
+      "mcgo/weapons/pistolshot01"
+    ]
+  },
+  "mcgo.callouts.goingtoa": {
+    "category": "master",
+    "sounds": [
+      "mcgo/callouts/goingtoa"
+    ]
+  }
+}

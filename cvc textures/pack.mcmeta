@@ -1,0 +1,15 @@
+{
+  "pack": {
+    "pack_format": 1,
+    "description": "Cops Vs Criminals Resource Pack"
+  },
+
+  "meta": {
+    "pack_type": 1,
+    "pack_version": "2.0",
+    "game_version": "1.8.9",
+    "pack_resolution": "32x",
+    "description": "made by NoxyD, SteampunkStein",
+    "consists": "Sounds and Textures."
+  }
+}
