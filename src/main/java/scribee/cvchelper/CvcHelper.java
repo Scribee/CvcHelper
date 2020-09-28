@@ -29,7 +29,7 @@ public class CvcHelper {
 	private static Pattern killfeedPattern = Pattern.compile(S + "r" + S + "[34](\\w{1,16}) " + S + "r" + S + "f(\\W\\W?\\W?) " + S + "r" + S + "[34](\\w{1,16})");
     // Total number of kills the player has gotten since their last death
 	private static int totalStreak = 0;
-	
+	// Number of kills with each different weapon the player has gotten since their last death
 	private static Map<String, Integer> weaponStreaks = new HashMap<String, Integer>();
 	
     @EventHandler
@@ -52,7 +52,6 @@ public class CvcHelper {
 			// If it was the player's kill (first name in the message is their username)
 			if (matcher.group(1).equals(name)) {
 				totalStreak++;
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_GREEN + "Current streak: " + EnumChatFormatting.RESET + totalStreak));
 				Minecraft.getMinecraft().thePlayer.addChatMessage(updateWeaponStreaks(matcher.group(2)));
 			}
 			// If it was the player's death (last name in the message is their username)
@@ -90,12 +89,6 @@ public class CvcHelper {
 			System.out.println("Fall damage");
 			resetWeaponStreaks();
 		}
-		else if (message.contains(String.valueOf('\u926c')) || message.contains(String.valueOf('\u9273'))) {
-			System.out.println("Nade message: " + message);
-		}
-		else if (message.contains("Scribee")) {
-			System.out.println("Other message: " + message);
-		}
 	}
     
     private ChatComponentText updateWeaponStreaks(String weapon) {
@@ -121,8 +114,8 @@ public class CvcHelper {
     	weaponStreaks.put(weapon, kills);
     	
     	// Return the streak message to be printed for the player
-    	return new ChatComponentText(EnumChatFormatting.DARK_GREEN + "Current " + weapon + " streak: " + EnumChatFormatting.RESET + kills);
-    }
+    	return new ChatComponentText(weapon + EnumChatFormatting.DARK_GREEN + " streak: " + EnumChatFormatting.RESET + kills);
+    } 
     
     private void resetWeaponStreaks() {
     	weaponStreaks.forEach(new BiConsumer<String, Integer>() {

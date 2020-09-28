@@ -24,3 +24,4 @@ eclipse
 run
 cvc textures/
 *.txt
+build.bat
