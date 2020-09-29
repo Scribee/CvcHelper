@@ -32,18 +32,26 @@ public class CvcHelper {
 	// Number of kills with each different weapon the player has gotten since their last death
 	private static Map<String, Integer> weaponStreaks = new HashMap<String, Integer>();
 	
+	/**
+	 * Initialize mod.
+	 */
     @EventHandler
     public void init(FMLInitializationEvent event) {
     	MinecraftForge.EVENT_BUS.register(this);
 	}
     
+    /**
+     * Called whenever the player receives a chat message.
+     * 
+     * @param event - Chat message received event
+     */
     @SubscribeEvent
 	public void onChatEvent(ClientChatReceivedEvent event) {
 		String message = event.message.getFormattedText();
 		
+		// Get the player's name if it isn't saved already
 		if (name.equals("")) {
 			name = Minecraft.getMinecraft().thePlayer.getDisplayNameString();
-			System.out.println(name);
 		}
 
 		Matcher matcher = killfeedPattern.matcher(message);
@@ -56,12 +64,11 @@ public class CvcHelper {
 			}
 			// If it was the player's death (last name in the message is their username)
 			else if (matcher.group(3).equals(name)) {
-				totalStreak = 0;
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_GREEN + "Reset streaks." + EnumChatFormatting.RESET));
+				if (totalStreak > 0) {
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_GREEN + "Reset streaks." + EnumChatFormatting.RESET));
+				}
 				resetWeaponStreaks();
-			}
-			else {
-				System.out.println("Randy kill");
+				totalStreak = 0;
 			}
 		}
 		// Other types of deaths that don't follow the same pattern
@@ -91,6 +98,13 @@ public class CvcHelper {
 		}
 	}
     
+    /**
+     * Increments the killstreak counter for the specified weapon. If a key matching this weapon doesn't exist
+     * for the weaponStreaks map yet, it will be created with an initial value of 1.
+     * 
+     * @param weapon - Gun characters used to indicate what weapon was used
+     * @return streak message to send to the player
+     */
     private ChatComponentText updateWeaponStreaks(String weapon) {
     	int kills = 0;
     	
@@ -104,7 +118,7 @@ public class CvcHelper {
     		kills = weaponStreaks.get(weapon) + 1;
     		System.out.println("Added 1 kill for " + weapon);
     	}
-    	// If the weapon doesn't exist in the map, the streak is 1
+    	// If the weapon doesn't exist in the map, the streak must be 1
     	else {
     		kills = 1;
     		System.out.println("Created map entry for storing " + weapon + " kills");
@@ -113,10 +127,13 @@ public class CvcHelper {
     	// Update the map
     	weaponStreaks.put(weapon, kills);
     	
-    	// Return the streak message to be printed for the player
+    	// Return the streak message to be printed to the player
     	return new ChatComponentText(weapon + EnumChatFormatting.DARK_GREEN + " streak: " + EnumChatFormatting.RESET + kills);
     } 
     
+    /**
+     * Resets the value of every key in the weaponStreaks map.
+     */
     private void resetWeaponStreaks() {
     	weaponStreaks.forEach(new BiConsumer<String, Integer>() {
 			@Override
