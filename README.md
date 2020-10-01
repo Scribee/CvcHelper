@@ -1,7 +1,9 @@
 # CvcHelper 1.8.9
-A mod that provides a few simple quality-of-life functions for _Cops and Crims_ games on the [Hypixel](hypixel.net) Minecraft server.
+A forge mod that provides a few simple quality-of-life functions for _Cops and Crims_ games on the [Hypixel](hypixel.net) Minecraft server.
 
 Currently, version 1.0 of the mod only tracks your killstreaks per weapon during games, and displays them in chat.
+
+Release 1.0 for Forge 1.8.9 can be downloaded [here](https://github.com/Scribee/CvcHelper/releases/download/v1.0/cvchelper-1.0.jar)!
 
 ### TODO:
 * Create settings GUI
