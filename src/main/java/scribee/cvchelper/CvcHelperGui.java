@@ -5,14 +5,14 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 
 public class CvcHelperGui extends Gui {
-	final int TEXT_WIDTH = 67; // maximum width in pixels for killstreak messages (assuming 3 digits isn't possible)
+	final int TEXT_WIDTH = 72; // maximum width in pixels for killstreak messages (assuming 3 digits isn't possible)
 	final int TEXT_HEIGHT = 8; // height of a line of text
 
 	/**
 	 * Constructor for the CvcHelperGui, which just displays the killstreak message as text in different positions on the screen.
 	 * @param mc - Minecraft instance
 	 */
-	public CvcHelperGui(Minecraft mc) {
+	public CvcHelperGui(Minecraft mc, String message, HudPosition position) {
 		ScaledResolution res = new ScaledResolution(mc);
 
 		// Position to draw the killstreak message at
@@ -20,7 +20,7 @@ public class CvcHelperGui extends Gui {
 		int y = 0;
 
 		// Check where the messages should be printed and calculate the x and y coordinates of that area
-		switch (CvcHelper.getCurrentHudPos()) {
+		switch (position) {
 		case HOTBAR_LEFT:
 			x = (res.getScaledWidth() / 2) - 91 - TEXT_WIDTH - 2; // middle of the screen - half the width of the hotbar - width of the string - buffer
 			y = res.getScaledHeight() - TEXT_HEIGHT - 7; // to center vertically next to the 22 pixel hotbar means 7 pixels below
@@ -43,7 +43,7 @@ public class CvcHelperGui extends Gui {
 			break;
 		case TOP_MIDDLE:
 			x = (res.getScaledWidth() / 2) - (TEXT_WIDTH / 2);
-			y = 19; // buffer to put it below the bossbar which is sometimes visible in cvc
+			y = 19; // buffer to put it below the bossbar which is sometimes used on Hypixel
 			break;
 		case TOP_LEFT:
 			x = 2;
@@ -51,7 +51,7 @@ public class CvcHelperGui extends Gui {
 			break;
 		case SIDE_LEFT:
 			x = 2;
-			y = res.getScaledHeight() / 2;
+			y = (res.getScaledHeight() / 2) - 4;
 			break;
 		case BOTTOM_LEFT:
 			x = 2;
@@ -61,12 +61,16 @@ public class CvcHelperGui extends Gui {
 			return; // return without drawing the string at all
 		case NONE:
 			return;
+		case CROSSHAIR:
+			x = (res.getScaledWidth() / 2) + 6;
+			y = (res.getScaledHeight() / 2) - 4;
+			break;
 		default:
 			System.out.println("Unknown position");
 			break;
 		}
 
 		// Draw the message at the calculated coordinates
-		drawString(mc.fontRendererObj, CvcHelper.getStreakMessage(), x, y, Integer.parseInt("FFFFFF", 16));
+		drawString(mc.fontRendererObj, message, x, y, Integer.parseInt("FFFFFF", 16));
 	}
 }

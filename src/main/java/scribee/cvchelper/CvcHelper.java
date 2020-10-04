@@ -36,7 +36,7 @@ public class CvcHelper {
 	// Number of kills with each different weapon the player has gotten since their last death
 	private static Map<String, Integer> weaponStreaks = new HashMap<String, Integer>();
 	// Message stating the player's current streak with the most recent weapon used
-	private static String currentStreak = String.valueOf('\u9273') + EnumChatFormatting.DARK_GREEN + " streak: " + EnumChatFormatting.RESET + "3";
+	private static String currentStreak = "Streak display";
 	// Key binding for changing the position that killstreak messages are displayed
 	private static KeyBinding changeHudPos = new KeyBinding("keyBinding.hudPos", Keyboard.KEY_H, "category.cvchelper");
 	// Current position to display killstreak messages
@@ -49,7 +49,8 @@ public class CvcHelper {
     public void init(FMLInitializationEvent event) {
     	MinecraftForge.EVENT_BUS.register(this);
     	MinecraftForge.EVENT_BUS.register(new RenderGuiHandler());
-    	
+    	MinecraftForge.EVENT_BUS.register(new GrenadeCountdown());
+
     	ClientRegistry.registerKeyBinding(changeHudPos);
     	MinecraftForge.EVENT_BUS.register(new KeyHandler());
 	}
@@ -62,7 +63,7 @@ public class CvcHelper {
     @SubscribeEvent
 	public void onChatEvent(ClientChatReceivedEvent event) {
 		String message = event.message.getFormattedText();
-		
+
 		// Get the player's name if it isn't saved already
 		if (name.equals("")) {
 			name = Minecraft.getMinecraft().thePlayer.getDisplayNameString();
@@ -108,6 +109,9 @@ public class CvcHelper {
 			System.out.println("Fall damage");
 			resetWeaponStreaks();
 		}
+		else if (message.equals(EnumChatFormatting.RESET + "" + EnumChatFormatting.GREEN + "You selected the " + EnumChatFormatting.RESET + "" + EnumChatFormatting.GOLD + "Frag Grenade" + EnumChatFormatting.RESET)) {
+			GrenadeCountdown.startCountdown();
+		}
 	}
     
     /**
@@ -128,12 +132,10 @@ public class CvcHelper {
     	// If the weapon already exists as a key in the map, increment its value
     	if (weaponStreaks.containsKey(weapon)) {
     		kills = weaponStreaks.get(weapon) + 1;
-    		System.out.println("Added 1 kill for " + weapon);
     	}
     	// If the weapon doesn't exist in the map, the streak must be 1
     	else {
     		kills = 1;
-    		System.out.println("Created map entry for storing " + weapon + " kills");
     	}
     	
     	// Update the map
@@ -154,7 +156,6 @@ public class CvcHelper {
 			@Override
 			public void accept(String k, Integer v) {
 				weaponStreaks.put(k, 0);
-				System.out.println("Reset " + k);
 			}
 		});
     }

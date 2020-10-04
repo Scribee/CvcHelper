@@ -11,7 +11,8 @@ public enum HudPosition {
 	SIDE_LEFT,
 	BOTTOM_LEFT,
 	CHAT,
-	NONE;
+	NONE,
+	CROSSHAIR; // only to be used by the grenade countdown
 	
 	/**
 	 * Returns the hud position that follows the current one.
@@ -19,6 +20,7 @@ public enum HudPosition {
 	 * @return next HudPosition
 	 */
 	public HudPosition next() {
-		return values()[(ordinal() + 1) % values().length];
+		// Return the next position, but always skip from the second to last value to the beginning
+		return values()[(ordinal() + 1) % (values().length - 1)];
 	}
 }
