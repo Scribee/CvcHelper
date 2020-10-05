@@ -1,4 +1,4 @@
-package scribee.cvchelper;
+package scribee.cvchelper.gui;
 
 public enum HudPosition {
 	HOTBAR_LEFT,

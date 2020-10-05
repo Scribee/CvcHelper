@@ -1,4 +1,4 @@
-package scribee.cvchelper;
+package scribee.cvchelper.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;

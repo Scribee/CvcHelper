@@ -19,18 +19,20 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import scribee.cvchelper.gui.HudPosition;
+import scribee.cvchelper.gui.RenderGuiHandler;
+import scribee.cvchelper.util.Reference;
 
-@Mod(modid = CvcHelper.MODID, version = CvcHelper.VERSION)
+/**
+ * Main mod class in charge of reading incoming chat messages and counting killstreaks.
+ */
+@Mod(modid = Reference.MOD_ID, version = Reference.VERSION)
 public class CvcHelper {
-    public static final String MODID = "cvchelper";
-    public static final String VERSION = "1.1";
-    
-    // Section symbol used by minecraft for text formatting
-	private static final String S = String.valueOf('\u00a7');
+
     // Player's username
 	private static String name = "";
 	// Regex that matches kill and death messages
-	private static Pattern killfeedPattern = Pattern.compile(S + "r" + S + "[34](\\w{1,16}) " + S + "r" + S + "f(\\W\\W?\\W?) " + S + "r" + S + "[34](\\w{1,16})");
+	private static Pattern killfeedPattern = Pattern.compile(EnumChatFormatting.RESET + Reference.S + "[34](\\w{1,16}) " + EnumChatFormatting.RESET + "" + EnumChatFormatting.WHITE + "(\\W\\W?\\W?) " + EnumChatFormatting.RESET + Reference.S + "[34](\\w{1,16})");
     // Total number of kills the player has gotten since their last death
 	private static int totalStreak = 0;
 	// Number of kills with each different weapon the player has gotten since their last death
@@ -48,7 +50,9 @@ public class CvcHelper {
     @EventHandler
     public void init(FMLInitializationEvent event) {
     	MinecraftForge.EVENT_BUS.register(this);
+    	
     	MinecraftForge.EVENT_BUS.register(new RenderGuiHandler());
+    	
     	MinecraftForge.EVENT_BUS.register(new GrenadeCountdown());
 
     	ClientRegistry.registerKeyBinding(changeHudPos);
@@ -88,25 +92,17 @@ public class CvcHelper {
 				resetWeaponStreaks();
 			}
 		}
-		// Other types of deaths that don't follow the same pattern
 		// If player is sent to a different server (or starts a new game)
-		else if (message.startsWith(S + "aSending you to ") && message.endsWith("!" + S + "r")) {
+		else if (message.startsWith(EnumChatFormatting.GREEN + "Sending you to ") && message.endsWith("!" + EnumChatFormatting.RESET)) {
 			System.out.println("New game");
 			resetWeaponStreaks();
 		}
-		// If the player kills themself with a grenade or firebomb
-		else if ((message.startsWith(S + "r" + S + "f" + String.valueOf('\u926c') + " ") || message.startsWith(S + "r" + S + "f" + String.valueOf('\u9273') + " ")) && message.substring(10).equals(name + S + "r")) {
-			System.out.println("Suicide nade");
-			resetWeaponStreaks();
-		}
-		// If they die from the C4
-		else if (message.startsWith(S + "r" + S + "f" + String.valueOf('\u9276') + " ") && message.substring(10).equals(name + S + "r")) {
-			System.out.println("C4");
-			resetWeaponStreaks();
-		}
-		// If they die from fall damage
-		else if (message.startsWith(S + "r" + S + "f" + String.valueOf('\u9271') + String.valueOf('\u9272') + " ") && message.substring(11).equals(name + S + "r")) {
-			System.out.println("Fall damage");
+		// If player death message doesn't involve another player
+		else if (message.startsWith(EnumChatFormatting.RESET + "" + EnumChatFormatting.WHITE + Reference.GRENADE + " ")
+				|| message.startsWith(EnumChatFormatting.RESET + "" + EnumChatFormatting.WHITE + Reference.FIRE + " ")
+				|| message.startsWith(EnumChatFormatting.RESET + "" + EnumChatFormatting.WHITE + Reference.C4 + " ")
+				|| message.startsWith(EnumChatFormatting.RESET + "" + EnumChatFormatting.WHITE + Reference.BONE + " ")
+				&& message.endsWith(name + EnumChatFormatting.RESET)) {
 			resetWeaponStreaks();
 		}
 		else if (message.equals(EnumChatFormatting.RESET + "" + EnumChatFormatting.GREEN + "You selected the " + EnumChatFormatting.RESET + "" + EnumChatFormatting.GOLD + "Frag Grenade" + EnumChatFormatting.RESET)) {
@@ -125,7 +121,7 @@ public class CvcHelper {
     	int kills = 0;
     	
     	// If there was one, remove the headshot symbol to just get the characters that make up the gun
-    	if (weapon.substring(weapon.length() - 1).equals(String.valueOf('\u9270'))) {
+    	if (weapon.substring(weapon.length() - 1).equals(Reference.HEADSHOT)) {
     		weapon = weapon.substring(0, weapon.length() - 1);
     	}
     	
@@ -200,7 +196,7 @@ public class CvcHelper {
 	public static void nextHudPosition() {
 		currentHudPos = currentHudPos.next();
 		if (currentHudPos == HudPosition.CHAT) {
-			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_GREEN + "Killstreaks will now be printed in chat.\n" + EnumChatFormatting.DARK_GREEN + "Press " + EnumChatFormatting.RESET + Keyboard.getKeyName(getHudPosKeyBinding().getKeyCode()) + EnumChatFormatting.DARK_GREEN + " again to turn off entirely." + EnumChatFormatting.RESET));
+			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_GREEN + "Killstreaks will now be printed in chat.\n" + EnumChatFormatting.DARK_GREEN + "Press " + EnumChatFormatting.RESET + Keyboard.getKeyName(getHudPosKeyBinding().getKeyCode()) + EnumChatFormatting.DARK_GREEN + " again to disable messages entirely." + EnumChatFormatting.RESET));
 		}
 	}
 }
