@@ -5,8 +5,6 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import scribee.cvchelper.CvcHelper;
-import scribee.cvchelper.GrenadeCountdown;
-import scribee.cvchelper.StreakDisplay;
 
 /**
  * Class in charge of rendering all GUI elements for the mod.
@@ -20,8 +18,8 @@ public class RenderGuiHandler {
 	 */
 	@SubscribeEvent
 	public void onRenderGui(RenderGameOverlayEvent.Post event) {
-		String streak = StreakDisplay.getStreakMessage();
-		String nade = GrenadeCountdown.getNadeMessage();
+		String streak = CvcHelper.streakCounter.getStreakMessage();
+		String nade = CvcHelper.nadeCounter.getNadeMessage();
 		// To keep from messing up normal rendering, wait until after the xp bar is drawn
 		if (event.type == ElementType.EXPERIENCE) {
 			if (!streak.equals("")) {

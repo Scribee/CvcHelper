@@ -9,18 +9,33 @@ import scribee.cvchelper.util.Reference;
 
 public class StreakDisplay {
     // Total number of kills the player has gotten since their last death
-	private static int totalStreak = 0;
+	private int totalStreak = 0;
 	// Message stating the player's current streak with the most recent weapon used
-	private static String streakMessage = "";
+	private String streakMessage = "";
 	
 	// Number of kills with each different weapon the player has gotten since their last death
-	private static Map<String, Integer> weaponStreaks = new HashMap<String, Integer>();
+	private Map<String, Integer> weaponStreaks = new HashMap<String, Integer>();
 	
-	public static int getTotalStreak() {
+	/**
+	 * Default constructor for a new StreakDisplay.
+	 */
+	public StreakDisplay() {
+		
+	}
+	
+	/**
+	 * Getter for the total killstreak of the play.
+	 * 
+	 * @return int - total killstreak
+	 */
+	public int getTotalStreak() {
 		return totalStreak;
 	}
 	
-	public static void resetStreaks() {
+	/**
+	 * Resets the streak for each weapon, as well as the total streak count and streak message.
+	 */
+	public void resetStreaks() {
 		totalStreak = 0;
     	streakMessage = "";
     	
@@ -35,9 +50,9 @@ public class StreakDisplay {
     /**
      * Getter for currentStreak variable, which stores the message stating the current killstreak.
      * 
-     * @return a formatted message stating the current weapon and streak.
+     * @return String - formatted message stating the current weapon and streak.
      */	
-	public static String getStreakMessage() {
+	public String getStreakMessage() {
 		return streakMessage;
 	}
 	
@@ -46,9 +61,9 @@ public class StreakDisplay {
      * for the weaponStreaks map yet, it will be created with an initial value of 1.
      * 
      * @param weapon - Gun characters used to indicate what weapon was used
-     * @return streak message to send to the player
+     * @return String - streak message to send to the player
      */
-    public static void updateWeaponStreaks(String weapon) {
+    public void updateWeaponStreaks(String weapon) {
     	int kills = 0;
     	totalStreak++;
     	

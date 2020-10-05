@@ -31,9 +31,12 @@ public class CvcHelper {
 	// Regex that matches kill and death messages
 	private static Pattern killfeedPattern = Pattern.compile(EnumChatFormatting.RESET + Reference.S + "[34](\\w{1,16}) " + EnumChatFormatting.RESET + "" + EnumChatFormatting.WHITE + "(\\W\\W?\\W?) " + EnumChatFormatting.RESET + Reference.S + "[34](\\w{1,16})");
 	// Key binding for changing the position that killstreak messages are displayed
-	private static KeyBinding changeHudPos = new KeyBinding("keyBinding.hudPos", Keyboard.KEY_H, "category.cvchelper");
+	private static KeyBinding keyChangeHudPos = new KeyBinding("keyBinding.hudPos", Keyboard.KEY_H, "category.cvchelper");
 	// Current position to display killstreak messages
 	private static HudPosition currentHudPos = HudPosition.HOTBAR_LEFT;
+	
+	public static StreakDisplay streakCounter = new StreakDisplay();
+	public static GrenadeCountdown nadeCounter = new GrenadeCountdown();
 	
 	/**
 	 * Initialize mod.
@@ -44,9 +47,9 @@ public class CvcHelper {
     	
     	MinecraftForge.EVENT_BUS.register(new RenderGuiHandler());
     	
-    	MinecraftForge.EVENT_BUS.register(new GrenadeCountdown());
+    	MinecraftForge.EVENT_BUS.register(nadeCounter);
 
-    	ClientRegistry.registerKeyBinding(changeHudPos);
+    	ClientRegistry.registerKeyBinding(keyChangeHudPos);
     	MinecraftForge.EVENT_BUS.register(new KeyHandler());
 	}
     
@@ -69,23 +72,23 @@ public class CvcHelper {
 		if (matcher.find()) {
 			// If it was the player's kill (first name in the message is their username)
 			if (matcher.group(1).equals(name)) {
-				StreakDisplay.updateWeaponStreaks(matcher.group(2));
+				streakCounter.updateWeaponStreaks(matcher.group(2));
 				if (currentHudPos == HudPosition.CHAT) {
 					sendStreakMessage();
 				}
 			}
 			// If it was the player's death (last name in the message is their username)
 			else if (matcher.group(3).equals(name)) {
-				if (StreakDisplay.getTotalStreak() > 0) {
+				if (streakCounter.getTotalStreak() > 0) {
 					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_GREEN + "Reset streaks." + EnumChatFormatting.RESET));
 				}
-				StreakDisplay.resetStreaks();
+				streakCounter.resetStreaks();
 			}
 		}
 		// If player is sent to a different server (or starts a new game)
 		else if (message.startsWith(EnumChatFormatting.GREEN + "Sending you to ") && message.endsWith("!" + EnumChatFormatting.RESET)) {
 			System.out.println("New game");
-			StreakDisplay.resetStreaks();
+			streakCounter.resetStreaks();
 		}
 		// If player death message doesn't involve another player
 		else if (message.startsWith(EnumChatFormatting.RESET + "" + EnumChatFormatting.WHITE + Reference.GRENADE + " ")
@@ -93,10 +96,10 @@ public class CvcHelper {
 				|| message.startsWith(EnumChatFormatting.RESET + "" + EnumChatFormatting.WHITE + Reference.C4 + " ")
 				|| message.startsWith(EnumChatFormatting.RESET + "" + EnumChatFormatting.WHITE + Reference.BONE + " ")
 				&& message.endsWith(name + EnumChatFormatting.RESET)) {
-			StreakDisplay.resetStreaks();
+			streakCounter.resetStreaks();
 		}
 		else if (message.equals(EnumChatFormatting.RESET + "" + EnumChatFormatting.GREEN + "You selected the " + EnumChatFormatting.RESET + "" + EnumChatFormatting.GOLD + "Frag Grenade" + EnumChatFormatting.RESET)) {
-			GrenadeCountdown.startCountdown();
+			nadeCounter.startCountdown();
 		}
 	}
     
@@ -104,22 +107,22 @@ public class CvcHelper {
      * Prints the current streak in chat.
      */
     public static void sendStreakMessage() {
-    	Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(StreakDisplay.getStreakMessage()));
+    	Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(streakCounter.getStreakMessage()));
     }
     
     /**
      * Getter for the changeHudPos key binding.
      * 
-     * @return KeyBinding for changing the position of messages
+     * @return KeyBinding - key used to change the position of messages
      */
     public static KeyBinding getHudPosKeyBinding() {
-    	return changeHudPos;
+    	return keyChangeHudPos;
     }
 
     /**
      * Getter for the current position messages will be displayed.
      * 
-     * @return HudPosition where killstreaks will be displayed
+     * @return HudPosition - area of screen where killstreaks will be displayed
      */
 	public static HudPosition getCurrentHudPos() {
 		return currentHudPos;

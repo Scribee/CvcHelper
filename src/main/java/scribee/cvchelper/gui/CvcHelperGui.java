@@ -10,7 +10,10 @@ public class CvcHelperGui extends Gui {
 
 	/**
 	 * Constructor for the CvcHelperGui, which just displays the killstreak message as text in different positions on the screen.
+	 * 
 	 * @param mc - Minecraft instance
+	 * @param message - message to display on screen
+	 * @param position - area of screen to display the provided message
 	 */
 	public CvcHelperGui(Minecraft mc, String message, HudPosition position) {
 		ScaledResolution res = new ScaledResolution(mc);
