@@ -9,6 +9,7 @@ import scribee.cvchelper.util.Reference;
  * Notifies the player when they're able to reselect the grenade in TDM games.
  */
 public class GrenadeCountdown {
+	private boolean inGame = false;
 	private boolean onCooldown = false; // if true, the player cannot select a grenade yet
 	private int cooldownTicks = 0;
 	
@@ -23,6 +24,7 @@ public class GrenadeCountdown {
 	 * Updates onCooldown to begin the countdown.
 	 */
 	public void startCountdown() {
+		inGame = true;
 		onCooldown = true;
 		cooldownTicks = Reference.GRENADE_COOLDOWN * 20; // there should be 20 ticks per second
 	}
@@ -53,11 +55,19 @@ public class GrenadeCountdown {
 	 * @return String - message to be displayed to the user notifying them that they can reselect the grenade
 	 */
 	public String getNadeMessage() {
-		if (!onCooldown) {
+		if (!onCooldown && inGame) {
 			return Reference.GRENADE;
 		}
 		else {
 			return "";
 		}
+	}
+	
+	/**
+	 * Resets the countdown when the player is no longer in game, to stop displaying the grenade notification.
+	 */
+	public void resetCounter() {
+		onCooldown = false;
+		inGame = false;
 	}
 }

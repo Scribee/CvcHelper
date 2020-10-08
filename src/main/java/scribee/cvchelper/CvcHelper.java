@@ -16,6 +16,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 import scribee.cvchelper.gui.HudPosition;
 import scribee.cvchelper.gui.RenderGuiHandler;
 import scribee.cvchelper.util.Reference;
@@ -23,7 +24,7 @@ import scribee.cvchelper.util.Reference;
 /**
  * Main mod class in charge of reading incoming chat messages and counting killstreaks.
  */
-@Mod(modid = Reference.MOD_ID, version = Reference.VERSION)
+@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION)
 public class CvcHelper {
 
     // Player's username
@@ -34,6 +35,8 @@ public class CvcHelper {
 	private static KeyBinding keyChangeHudPos = new KeyBinding("keyBinding.hudPos", Keyboard.KEY_H, "category.cvchelper");
 	// Current position to display killstreak messages
 	private static HudPosition currentHudPos = HudPosition.HOTBAR_LEFT;
+	
+	private static Minecraft mc = Minecraft.getMinecraft();
 	
 	public static StreakDisplay streakCounter = new StreakDisplay();
 	public static GrenadeCountdown nadeCounter = new GrenadeCountdown();
@@ -64,7 +67,7 @@ public class CvcHelper {
 
 		// Get the player's name if it isn't saved already
 		if (name.equals("")) {
-			name = Minecraft.getMinecraft().thePlayer.getDisplayNameString();
+			name = mc.thePlayer.getDisplayNameString();
 		}
 
 		Matcher matcher = killfeedPattern.matcher(message);
@@ -80,15 +83,10 @@ public class CvcHelper {
 			// If it was the player's death (last name in the message is their username)
 			else if (matcher.group(3).equals(name)) {
 				if (streakCounter.getTotalStreak() > 0) {
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_GREEN + "Reset streaks." + EnumChatFormatting.RESET));
+					mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_GREEN + "Reset streaks." + EnumChatFormatting.RESET));
 				}
 				streakCounter.resetStreaks();
 			}
-		}
-		// If player is sent to a different server (or starts a new game)
-		else if (message.startsWith(EnumChatFormatting.GREEN + "Sending you to ") && message.endsWith("!" + EnumChatFormatting.RESET)) {
-			System.out.println("New game");
-			streakCounter.resetStreaks();
 		}
 		// If player death message doesn't involve another player
 		else if (message.startsWith(EnumChatFormatting.RESET + "" + EnumChatFormatting.WHITE + Reference.GRENADE + " ")
@@ -98,16 +96,40 @@ public class CvcHelper {
 				&& message.endsWith(name + EnumChatFormatting.RESET)) {
 			streakCounter.resetStreaks();
 		}
+		// If player selects grenade in TDM
 		else if (message.equals(EnumChatFormatting.RESET + "" + EnumChatFormatting.GREEN + "You selected the " + EnumChatFormatting.RESET + "" + EnumChatFormatting.GOLD + "Frag Grenade" + EnumChatFormatting.RESET)) {
 			nadeCounter.startCountdown();
 		}
-	}
+		// Detect when games end to stop displaying anything
+		else if (message.equals(EnumChatFormatting.RESET + "                          " + EnumChatFormatting.RESET + "" + EnumChatFormatting.DARK_AQUA + "" + EnumChatFormatting.BOLD + "Cops won the game!" + EnumChatFormatting.RESET) || message.equals(EnumChatFormatting.RESET + "                       " + EnumChatFormatting.RESET + "" + EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "Criminals won the game!" + EnumChatFormatting.RESET)) {
+			System.out.println("Game end");
+			streakCounter.resetStreaks();
+			nadeCounter.resetCounter();
+		}
+		// If player is sent to a different server (or starts a new game)
+		else if (message.startsWith(EnumChatFormatting.GREEN + "Sending you to ") && message.endsWith("!" + EnumChatFormatting.RESET)) {
+			System.out.println("New game");
+			streakCounter.resetStreaks();
+			nadeCounter.resetCounter();
+		}
+    }
     
+    /**
+     * Called when player disconnects from a sever. Used to reset all mod GUIs.
+     * 
+     * @param event - disconnect from server event
+     */
+    @SubscribeEvent
+    public void onPlayerLeaveEvent(FMLNetworkEvent.ClientDisconnectionFromServerEvent event) {
+    	streakCounter.resetStreaks();
+		nadeCounter.resetCounter();
+    }
+
     /**
      * Prints the current streak in chat.
      */
     public static void sendStreakMessage() {
-    	Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(streakCounter.getStreakMessage()));
+    	mc.thePlayer.addChatMessage(new ChatComponentText(streakCounter.getStreakMessage()));
     }
     
     /**
@@ -134,7 +156,7 @@ public class CvcHelper {
 	public static void nextHudPosition() {
 		currentHudPos = currentHudPos.next();
 		if (currentHudPos == HudPosition.CHAT) {
-			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_GREEN + "Killstreaks will now be printed in chat.\n" + EnumChatFormatting.DARK_GREEN + "Press " + EnumChatFormatting.RESET + Keyboard.getKeyName(getHudPosKeyBinding().getKeyCode()) + EnumChatFormatting.DARK_GREEN + " again to disable messages entirely." + EnumChatFormatting.RESET));
+			mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_GREEN + "Killstreaks will now be printed in chat.\n" + EnumChatFormatting.DARK_GREEN + "Press " + EnumChatFormatting.RESET + Keyboard.getKeyName(getHudPosKeyBinding().getKeyCode()) + EnumChatFormatting.DARK_GREEN + " again to disable messages entirely." + EnumChatFormatting.RESET));
 		}
 	}
 }
