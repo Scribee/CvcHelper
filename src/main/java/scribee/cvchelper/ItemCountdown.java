@@ -7,7 +7,7 @@ import scribee.cvchelper.gui.GuiPosition;
 import scribee.cvchelper.util.Reference;
 
 /**
- * Notifies the player when they're able to reselect the grenade in TDM games.
+ * Notifies the player when they're able to reselect an item with a cooldown in TDM.
  */
 public class ItemCountdown extends CvcHelperModule {
 	private boolean inGame = false;
