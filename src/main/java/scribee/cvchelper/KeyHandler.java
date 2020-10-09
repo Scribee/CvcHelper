@@ -15,8 +15,8 @@ public class KeyHandler {
 	@SubscribeEvent
 	public void onKeyPressed(KeyInputEvent event) {
 		// Check if the pressed key was the one bound to this function
-		if (CvcHelper.getHudPosKeyBinding().isKeyDown()) {
-			CvcHelper.nextHudPosition(); // cycle to the next position
+		if (CvcHelper.getGuiPosKeyBinding().isKeyDown()) {
+			CvcHelper.nextGuiPosition(); // cycle to the next position
 		}
 	}
 }

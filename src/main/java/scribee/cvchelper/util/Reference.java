@@ -7,7 +7,7 @@ public class Reference {
 	/* MOD INFO */
 	public static final String MOD_ID = "cvchelper";
 	public static final String MOD_NAME = "CvC Helper";
-	public static final String VERSION = "1.2";
+	public static final String VERSION = "1.3";
 	
 	/* SPECIAL CHARACTERS */
 	public static final String S = String.valueOf('\u00a7'); // section symbol used by minecraft for text formatting
@@ -18,7 +18,9 @@ public class Reference {
 	public static final String BONE = String.valueOf('\u9271') + String.valueOf('\u9272'); // fall damage
 	// Weapon symbols
 	public static final String HEADSHOT = String.valueOf('\u9270');
+	public static final String SYMBOL_GRENADE = String.valueOf('\u9283');
+	public static final String SYMBOL_FIREBOMB = String.valueOf('\u9279');
 	
 	/* CONSTANTS */
-	public static final int GRENADE_COOLDOWN = 90; // TDM grenade cooldown in seconds
+	public static final int THROWABLE_COOLDOWN = 90; // TDM grenade cooldown in seconds
 }

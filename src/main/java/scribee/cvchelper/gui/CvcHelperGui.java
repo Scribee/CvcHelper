@@ -15,7 +15,7 @@ public class CvcHelperGui extends Gui {
 	 * @param message - message to display on screen
 	 * @param position - area of screen to display the provided message
 	 */
-	public CvcHelperGui(Minecraft mc, String message, HudPosition position) {
+	public CvcHelperGui(Minecraft mc, String message, GuiPosition position) {
 		ScaledResolution res = new ScaledResolution(mc);
 
 		// Position to draw the killstreak message at
@@ -46,7 +46,7 @@ public class CvcHelperGui extends Gui {
 			break;
 		case TOP_MIDDLE:
 			x = (res.getScaledWidth() / 2) - (TEXT_WIDTH / 2);
-			y = 19; // buffer to put it below the bossbar which is sometimes used on Hypixel
+			y = 2; // in 1.8 the bossbar doesn't show during cvc games it seems like
 			break;
 		case TOP_LEFT:
 			x = 2;
@@ -64,10 +64,14 @@ public class CvcHelperGui extends Gui {
 			return; // return without drawing the string at all
 		case NONE:
 			return;
-		case CROSSHAIR:
+		case CROSSHAIR_RIGHT:
 			x = (res.getScaledWidth() / 2) + 6;
 			y = (res.getScaledHeight() / 2) - 4;
 			break;
+		case CROSSHAIR_LEFT:
+			x = (res.getScaledWidth() / 2) - 4 - 2 - 8; // center - crosshair width/2 - buffer - grenade symbol width
+			y = (res.getScaledHeight() / 2) - 4;
+			break;	
 		default:
 			System.out.println("Unknown position");
 			break;

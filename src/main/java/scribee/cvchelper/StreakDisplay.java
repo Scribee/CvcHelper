@@ -5,9 +5,10 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 
 import net.minecraft.util.EnumChatFormatting;
+import scribee.cvchelper.gui.GuiPosition;
 import scribee.cvchelper.util.Reference;
 
-public class StreakDisplay {
+public class StreakDisplay extends CvcHelperModule {
     // Total number of kills the player has gotten since their last death
 	private int totalStreak = 0;
 	// Message stating the player's current streak with the most recent weapon used
@@ -32,31 +33,7 @@ public class StreakDisplay {
 		return totalStreak;
 	}
 	
-	/**
-	 * Resets the streak for each weapon, as well as the total streak count and streak message.
-	 */
-	public void resetStreaks() {
-		totalStreak = 0;
-    	streakMessage = "";
-    	
-    	weaponStreaks.forEach(new BiConsumer<String, Integer>() {
-			@Override
-			public void accept(String k, Integer v) {
-				weaponStreaks.put(k, 0);
-			}
-		});
-	}
-	
     /**
-     * Getter for currentStreak variable, which stores the message stating the current killstreak.
-     * 
-     * @return String - formatted message stating the current weapon and streak.
-     */	
-	public String getStreakMessage() {
-		return streakMessage;
-	}
-	
-	/**
      * Increments the killstreak counter for the specified weapon. If a key matching this weapon doesn't exist
      * for the weaponStreaks map yet, it will be created with an initial value of 1.
      * 
@@ -87,4 +64,40 @@ public class StreakDisplay {
     	// Update the streak message to be printed to the player
     	streakMessage = EnumChatFormatting.RESET + weapon + EnumChatFormatting.DARK_GREEN + " streak: " + EnumChatFormatting.RESET + kills + EnumChatFormatting.RESET;
     }
+
+    /**
+	 * Resets the streak for each weapon, as well as the total streak count and streak message.
+	 */
+	@Override
+	public void reset() {
+		totalStreak = 0;
+    	streakMessage = "";
+    	
+    	weaponStreaks.forEach(new BiConsumer<String, Integer>() {
+			@Override
+			public void accept(String k, Integer v) {
+				weaponStreaks.put(k, 0);
+			}
+		});
+	}
+
+	/**
+     * Getter for currentStreak variable, which stores the message stating the current killstreak.
+     * 
+     * @return String - formatted message stating the current weapon and streak.
+     */	
+	@Override
+	public String getMessage() {
+		return streakMessage;
+	}
+
+	@Override
+	public boolean hasEventHandler() {
+		return false;
+	}
+
+	@Override
+	public GuiPosition getGuiPosition() {
+		return CvcHelper.getCurrentGuiPos();
+	}
 }

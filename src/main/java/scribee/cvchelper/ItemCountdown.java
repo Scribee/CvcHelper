@@ -3,21 +3,25 @@ package scribee.cvchelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
+import scribee.cvchelper.gui.GuiPosition;
 import scribee.cvchelper.util.Reference;
 
 /**
  * Notifies the player when they're able to reselect the grenade in TDM games.
  */
-public class GrenadeCountdown {
+public class ItemCountdown extends CvcHelperModule {
 	private boolean inGame = false;
 	private boolean onCooldown = false; // if true, the player cannot select a grenade yet
 	private int cooldownTicks = 0;
+	private String itemSymbol;
+	private GuiPosition pos;
 	
 	/**
 	 * Default constructor for a new GrenadeCountdown.
 	 */
-	public GrenadeCountdown() {
-		
+	public ItemCountdown(String symbol, GuiPosition position) {
+		itemSymbol = symbol;
+		pos = position;
 	}
 
 	/**
@@ -26,7 +30,7 @@ public class GrenadeCountdown {
 	public void startCountdown() {
 		inGame = true;
 		onCooldown = true;
-		cooldownTicks = Reference.GRENADE_COOLDOWN * 20; // there should be 20 ticks per second
+		cooldownTicks = Reference.THROWABLE_COOLDOWN * 20; // there should be 20 ticks per second
 	}
 
 	/**
@@ -49,25 +53,37 @@ public class GrenadeCountdown {
 	}
 
 	/**
+	 * Resets the countdown when the player is no longer in game, to stop displaying the grenade notification.
+	 */
+	@Override
+	public void reset() {
+		onCooldown = false;
+		inGame = false;		
+	}
+
+	/**
 	 * Getter method for the message that should be displayed to the player. If the player is able to reselect the grenade, a
 	 * grenade symbol will be returned. Otherwise, "" is returned.
 	 * 
 	 * @return String - message to be displayed to the user notifying them that they can reselect the grenade
 	 */
-	public String getNadeMessage() {
+	@Override
+	public String getMessage() {
 		if (!onCooldown && inGame) {
-			return Reference.GRENADE;
+			return itemSymbol;
 		}
 		else {
 			return "";
 		}
 	}
-	
-	/**
-	 * Resets the countdown when the player is no longer in game, to stop displaying the grenade notification.
-	 */
-	public void resetCounter() {
-		onCooldown = false;
-		inGame = false;
+
+	@Override
+	public boolean hasEventHandler() {
+		return true;
+	}
+
+	@Override
+	public GuiPosition getGuiPosition() {
+		return pos;
 	}
 }

@@ -5,11 +5,16 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import scribee.cvchelper.CvcHelper;
+import scribee.cvchelper.CvcHelperModule;
 
 /**
  * Class in charge of rendering all GUI elements for the mod.
  */
-public class RenderGuiHandler {
+public class RenderGuiHandler {	
+	public RenderGuiHandler() {
+		
+	}
+	
 	/**
 	 * Called after the game renders GUI elements on the screen. Used to draw custom strings
 	 * to show the player killstreak or grenade countdown messages.
@@ -18,16 +23,13 @@ public class RenderGuiHandler {
 	 */
 	@SubscribeEvent
 	public void onRenderGui(RenderGameOverlayEvent.Post event) {
-		String streak = CvcHelper.streakCounter.getStreakMessage();
-		String nade = CvcHelper.nadeCounter.getNadeMessage();
 		// To keep from messing up normal rendering, wait until after the xp bar is drawn
 		if (event.type == ElementType.EXPERIENCE) {
-			if (!streak.equals("")) {
-				new CvcHelperGui(Minecraft.getMinecraft(), streak, CvcHelper.getCurrentHudPos()); // render wherever the player has set
-			}
-			
-			if (!nade.equals("")) {
-				new CvcHelperGui(Minecraft.getMinecraft(), nade, HudPosition.CROSSHAIR); // always render in the center of the screen
+			for (CvcHelperModule module : CvcHelper.modules) {
+				String message = module.getMessage();
+				if (!message.equals("")) {
+					new CvcHelperGui(Minecraft.getMinecraft(), message, module.getGuiPosition()); // render wherever the player has set
+				}
 			}
 		}
 	}
