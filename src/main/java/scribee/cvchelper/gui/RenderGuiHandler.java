@@ -28,7 +28,7 @@ public class RenderGuiHandler {
 			for (CvcHelperModule module : CvcHelper.modules) {
 				String message = module.getMessage();
 				if (!message.equals("")) {
-					new CvcHelperGui(Minecraft.getMinecraft(), message, module.getGuiPosition()); // render wherever the player has set
+					new CvcHelperGui(Minecraft.getMinecraft(), message, module.getGuiPosition()); // render wherever the modules messages are displayed
 				}
 			}
 		}

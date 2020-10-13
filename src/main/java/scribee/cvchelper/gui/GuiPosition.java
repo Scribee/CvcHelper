@@ -15,7 +15,7 @@ public enum GuiPosition {
 	BOTTOM_LEFT,
 	CHAT,
 	NONE,
-	CROSSHAIR_RIGHT, // only to be used by item countdown notifications \/
+	CROSSHAIR_RIGHT, // crosshair positions only to be used by item countdown notifications
 	CROSSHAIR_LEFT,
 	CROSSHAIR_ABOVE,
 	CROSSHAIR_BELOW;

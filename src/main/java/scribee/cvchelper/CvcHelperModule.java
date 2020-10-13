@@ -3,8 +3,11 @@ package scribee.cvchelper;
 import scribee.cvchelper.gui.GuiPosition;
 
 public abstract class CvcHelperModule {
+	
+	private boolean enabled = true;
+	
 	/**
-	 * Modules that implement this method should expect it to be called every time the player dies or a game ends.
+	 * Modules should expect this method to be called every time the player dies or a game ends.
 	 */
 	public abstract void reset();
 	
@@ -28,4 +31,16 @@ public abstract class CvcHelperModule {
 	 * @return GuiPosition - where to display module messages
 	 */
 	public abstract GuiPosition getGuiPosition();
+	
+	public void disable() {
+		enabled = false;
+	}
+	
+	public void enable() {
+		enabled = true;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
 }

@@ -9,7 +9,7 @@ public class CvcHelperGui extends Gui {
 	final int TEXT_HEIGHT = 8; // height of a line of text
 
 	/**
-	 * Constructor for the CvcHelperGui, which just displays the killstreak message as text in different positions on the screen.
+	 * Constructor for the CvcHelperGui, which just draws mod messages as text in different positions on the screen.
 	 * 
 	 * @param mc - Minecraft instance
 	 * @param message - message to display on screen
@@ -18,7 +18,7 @@ public class CvcHelperGui extends Gui {
 	public CvcHelperGui(Minecraft mc, String message, GuiPosition position) {
 		ScaledResolution res = new ScaledResolution(mc);
 
-		// Position to draw the killstreak message at
+		// Position to draw the message at
 		int x = 0;
 		int y = 0;
 
@@ -46,7 +46,7 @@ public class CvcHelperGui extends Gui {
 			break;
 		case TOP_MIDDLE:
 			x = (res.getScaledWidth() / 2) - (TEXT_WIDTH / 2);
-			y = 2; // in 1.8 the bossbar doesn't show during cvc games it seems like
+			y = 2; // in 1.8 the bossbar doesn't show during cvc games, so this position shouldn't ever be covered
 			break;
 		case TOP_LEFT:
 			x = 2;

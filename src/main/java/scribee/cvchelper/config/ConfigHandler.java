@@ -6,13 +6,17 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 public class ConfigHandler {
 	public static Configuration config;
 	
-	public static final String CATEGORY_HIDDEN = "Hidden";
 	public static final String CATEGORY_MODULES = "Module Settings";
 	
 	public static boolean enableStreaks = true;
 	public static boolean enableGrenadeCountdown = true;
 	public static boolean enableFirebombCountdown = true;
 	
+	/**
+	 * Create the config file. Called from the preInit event handler in the main mod class.
+	 * 
+	 * @param event - FML preinitialization event
+	 */
 	public static void init(FMLPreInitializationEvent event) {
 		config = new Configuration(event.getSuggestedConfigurationFile());
 		
@@ -21,6 +25,9 @@ public class ConfigHandler {
 		syncConfig();
 	}
 	
+	/**
+	 * Creates fields if they don't exist, and saves the config file when changes have been made.
+	 */
 	public static void syncConfig() {
 		enableStreaks = config.getBoolean("Enable streak counter",
 				CATEGORY_MODULES,
@@ -39,7 +46,6 @@ public class ConfigHandler {
 		
 		if (config.hasChanged()) {
 			config.save();
-			System.out.println("Saved config file");
 		}
 	}
 }

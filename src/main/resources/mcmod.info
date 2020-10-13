@@ -2,7 +2,7 @@
 {
   "modid": "cvchelper",
   "name": "CvC Helper",
-  "description": "Provides several quality-of-life functions for Cops and Crims games.\n - Counts your killstreaks per weapon\n - Notifies you when you can reselect grenades in TDM",
+  "description": "Provides several quality-of-life functions for Cops and Crims games.\n - Counts your killstreaks per weapon\n - Notifies you when you can reselect grenades in TDM\n\nModules can be enabled or disabled in the mod config file, or with the config GUI in game. The default key to open the GUI is §lJ§r.",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "https://github.com/Scribee/CvcHelper#cvchelper-189",

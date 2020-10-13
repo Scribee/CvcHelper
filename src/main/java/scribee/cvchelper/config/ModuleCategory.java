@@ -11,7 +11,13 @@ import net.minecraftforge.fml.client.config.GuiConfigEntries.CategoryEntry;
 import net.minecraftforge.fml.client.config.IConfigElement;
 import scribee.cvchelper.util.Reference;
 
+/**
+ * Class defining the "Module Settings" category in the mod config GUI.
+ */
 public class ModuleCategory extends CategoryEntry {
+	/**
+	 * Constructor for the module category GUI in the config menu.
+	 */
 	public ModuleCategory(GuiConfig owningScreen, GuiConfigEntries owningEntryList, IConfigElement configElement) {
 		super(owningScreen, owningEntryList, configElement);
 	}

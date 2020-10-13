@@ -30,7 +30,7 @@ import scribee.cvchelper.util.Reference;
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION, guiFactory = Reference.GUI_FACTORY_PATH, clientSideOnly = true)
 public class CvcHelper {
 
-    // Player's username
+	// Player's username
 	private static String name = "";
 	// Regex that matches kill and death messages
 	private static Pattern killfeedPattern = Pattern.compile(EnumChatFormatting.RESET + Reference.S + "[34](\\w{1,16}) " + EnumChatFormatting.RESET + "" + EnumChatFormatting.WHITE + "(\\W\\W?\\W?) " + EnumChatFormatting.RESET + Reference.S + "[34](\\w{1,16})");
@@ -40,49 +40,48 @@ public class CvcHelper {
 	private static KeyBinding openConfigGui = new KeyBinding("keyBinding.configGui", Keyboard.KEY_J, "category.cvchelper");
 	// Current position to display killstreak messages
 	private static GuiPosition currentGuiPos = GuiPosition.HOTBAR_LEFT;
-	
+
 	private static Minecraft mc = Minecraft.getMinecraft();
-	
+
 	// Modules
 	private static StreakDisplay streakCounter = new StreakDisplay();
 	private static ItemCountdown nadeCounter = new ItemCountdown(Reference.SYMBOL_GRENADE, GuiPosition.CROSSHAIR_LEFT);
 	private static ItemCountdown firebombCounter = new ItemCountdown(Reference.SYMBOL_FIREBOMB, GuiPosition.CROSSHAIR_RIGHT);
 	public static CvcHelperModule[] modules = {streakCounter, nadeCounter, firebombCounter};
-	
+
 	public static RenderGuiHandler guiHandler = new RenderGuiHandler();
-	
+
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		ConfigHandler.init(event);
-		//ConfigHandler.syncConfig();
 	}
-	
+
 	/**
 	 * Initialize mod.
 	 */
-    @EventHandler
-    public void init(FMLInitializationEvent event) {
-    	MinecraftForge.EVENT_BUS.register(this);
-    	
-    	MinecraftForge.EVENT_BUS.register(guiHandler);
-    	
-    	for (CvcHelperModule module : modules) {
-    		if (module.hasEventHandler()) {
-    			MinecraftForge.EVENT_BUS.register(module);
-    		}
-    	}
+	@EventHandler
+	public void init(FMLInitializationEvent event) {
+		MinecraftForge.EVENT_BUS.register(this);
 
-    	ClientRegistry.registerKeyBinding(changeGuiPos);
-    	ClientRegistry.registerKeyBinding(openConfigGui);
-    	MinecraftForge.EVENT_BUS.register(new KeyHandler());
+		MinecraftForge.EVENT_BUS.register(guiHandler);
+
+		for (CvcHelperModule module : modules) {
+			if (module.hasEventHandler()) {
+				MinecraftForge.EVENT_BUS.register(module);
+			}
+		}
+
+		ClientRegistry.registerKeyBinding(changeGuiPos);
+		ClientRegistry.registerKeyBinding(openConfigGui);
+		MinecraftForge.EVENT_BUS.register(new KeyHandler());
 	}
-    
-    /**
-     * Called whenever the player receives a chat message.
-     * 
-     * @param event - Chat message received event
-     */
-    @SubscribeEvent
+
+	/**
+	 * Called whenever the player receives a chat message.
+	 * 
+	 * @param event - Chat message received event
+	 */
+	@SubscribeEvent
 	public void onChatEvent(ClientChatReceivedEvent event) {
 		String message = event.message.getFormattedText();
 
@@ -139,58 +138,81 @@ public class CvcHelper {
 				module.reset();
 			}
 		}
-    }
-    
-    /**
-     * Called when player disconnects from a sever. Used to reset all mod GUIs.
-     * 
-     * @param event - disconnect from server event
-     */
-    @SubscribeEvent
-    public void onPlayerLeaveEvent(FMLNetworkEvent.ClientDisconnectionFromServerEvent event) {
-    	for (CvcHelperModule module : modules) {
+	}
+
+	/**
+	 * Called when player disconnects from a sever. Used to reset all mod GUIs.
+	 * 
+	 * @param event - disconnect from server event
+	 */
+	@SubscribeEvent
+	public void onPlayerLeaveEvent(FMLNetworkEvent.ClientDisconnectionFromServerEvent event) {
+		for (CvcHelperModule module : modules) {
 			module.reset();
 		}
-    }
-    
-    @SubscribeEvent
-	 public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
-		 if (event.modID.equals(Reference.MOD_ID)) {
-			 ConfigHandler.syncConfig();
-			 mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_GREEN + "CvC Helper settings updated." + EnumChatFormatting.RESET));
-		 }
-	 }
+	}
 
-    /**
-     * Prints the current streak in chat.
-     */
-    public static void sendStreakMessage() {
-    	mc.thePlayer.addChatMessage(new ChatComponentText(streakCounter.getMessage()));
-    }
-    
-    /**
-     * Getter for the changeGuiPos key binding.
-     * 
-     * @return KeyBinding - key used to change the position of messages
-     */
-    public static KeyBinding getGuiPosKeyBinding() {
-    	return changeGuiPos;
-    }
-    
-    /**
-     * Getter for the openConfigGui key binding.
-     * 
-     * @return KeyBinding - key used to open the configuration menu
-     */
-    public static KeyBinding getOpenConfigKeyBinding() {
+	@SubscribeEvent
+	public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
+		if (event.modID.equals(Reference.MOD_ID)) {
+			ConfigHandler.syncConfig();
+			if (mc.thePlayer != null) {
+				mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_GREEN + "CvC Helper settings updated." + EnumChatFormatting.RESET));
+			}
+
+			if (!ConfigHandler.config.get(ConfigHandler.CATEGORY_MODULES, "Enable streak counter", true).getBoolean() && streakCounter.isEnabled()) {
+				streakCounter.disable();
+			}
+			else if (!streakCounter.isEnabled()) {
+				streakCounter.enable();
+			}
+
+			if (!ConfigHandler.config.get(ConfigHandler.CATEGORY_MODULES, "Enable grenade notification", true).getBoolean() && nadeCounter.isEnabled()) {
+				nadeCounter.disable();
+			}
+			else if (!nadeCounter.isEnabled()) {
+				nadeCounter.enable();
+			}
+
+			if (!ConfigHandler.config.get(ConfigHandler.CATEGORY_MODULES, "Enable firebomb notification", true).getBoolean() && firebombCounter.isEnabled()) {
+				firebombCounter.disable();
+			}
+			else if (!firebombCounter.isEnabled()) {
+				firebombCounter.enable();
+			}
+		}
+	}
+
+	/**
+	 * Prints the current streak in chat.
+	 */
+	public static void sendStreakMessage() {
+		mc.thePlayer.addChatMessage(new ChatComponentText(streakCounter.getMessage()));
+	}
+
+	/**
+	 * Getter for the changeGuiPos key binding.
+	 * 
+	 * @return KeyBinding - key used to change the position of messages
+	 */
+	public static KeyBinding getGuiPosKeyBinding() {
+		return changeGuiPos;
+	}
+
+	/**
+	 * Getter for the openConfigGui key binding.
+	 * 
+	 * @return KeyBinding - key used to open the configuration menu
+	 */
+	public static KeyBinding getOpenConfigKeyBinding() {
 		return openConfigGui;
 	}
 
-    /**
-     * Getter for the current position messages will be displayed.
-     * 
-     * @return GuiPosition - area of screen where killstreaks will be displayed
-     */
+	/**
+	 * Getter for the current position messages will be displayed.
+	 * 
+	 * @return GuiPosition - area of screen where killstreaks will be displayed
+	 */
 	public static GuiPosition getCurrentGuiPos() {
 		return currentGuiPos;
 	}

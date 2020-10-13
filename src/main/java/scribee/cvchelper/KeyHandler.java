@@ -3,7 +3,7 @@ package scribee.cvchelper;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
-import scribee.cvchelper.gui.CvcHelperConfigGui;
+import scribee.cvchelper.config.CvcHelperConfigGui;
 
 /**
  * Checks for mod keybind presses.

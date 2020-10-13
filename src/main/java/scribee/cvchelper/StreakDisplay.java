@@ -88,7 +88,7 @@ public class StreakDisplay extends CvcHelperModule {
      */	
 	@Override
 	public String getMessage() {
-		return streakMessage;
+		return isEnabled() ? streakMessage : "";
 	}
 
 	@Override
@@ -98,6 +98,6 @@ public class StreakDisplay extends CvcHelperModule {
 
 	@Override
 	public GuiPosition getGuiPosition() {
-		return CvcHelper.getCurrentGuiPos();
+		return isEnabled() ? CvcHelper.getCurrentGuiPos() : GuiPosition.NONE;
 	}
 }

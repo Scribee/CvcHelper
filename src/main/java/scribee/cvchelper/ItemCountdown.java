@@ -58,7 +58,7 @@ public class ItemCountdown extends CvcHelperModule {
 	@Override
 	public void reset() {
 		onCooldown = false;
-		inGame = false;		
+		inGame = false;
 	}
 
 	/**
@@ -69,7 +69,7 @@ public class ItemCountdown extends CvcHelperModule {
 	 */
 	@Override
 	public String getMessage() {
-		if (!onCooldown && inGame) {
+		if (!onCooldown && inGame && isEnabled()) {
 			return itemSymbol;
 		}
 		else {
@@ -84,6 +84,6 @@ public class ItemCountdown extends CvcHelperModule {
 
 	@Override
 	public GuiPosition getGuiPosition() {
-		return pos;
+		return isEnabled() ? pos : GuiPosition.NONE;
 	}
 }
