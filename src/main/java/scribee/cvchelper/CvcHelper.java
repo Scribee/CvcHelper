@@ -11,12 +11,15 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
+import scribee.cvchelper.config.ConfigHandler;
 import scribee.cvchelper.gui.GuiPosition;
 import scribee.cvchelper.gui.RenderGuiHandler;
 import scribee.cvchelper.util.Reference;
@@ -24,7 +27,7 @@ import scribee.cvchelper.util.Reference;
 /**
  * Main mod class in charge of reading incoming chat messages and counting killstreaks.
  */
-@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION)
+@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION, guiFactory = Reference.GUI_FACTORY_PATH, clientSideOnly = true)
 public class CvcHelper {
 
     // Player's username
@@ -32,7 +35,9 @@ public class CvcHelper {
 	// Regex that matches kill and death messages
 	private static Pattern killfeedPattern = Pattern.compile(EnumChatFormatting.RESET + Reference.S + "[34](\\w{1,16}) " + EnumChatFormatting.RESET + "" + EnumChatFormatting.WHITE + "(\\W\\W?\\W?) " + EnumChatFormatting.RESET + Reference.S + "[34](\\w{1,16})");
 	// Key binding for changing the position that killstreak messages are displayed
-	private static KeyBinding keyChangeGuiPos = new KeyBinding("keyBinding.guiPos", Keyboard.KEY_H, "category.cvchelper");
+	private static KeyBinding changeGuiPos = new KeyBinding("keyBinding.guiPos", Keyboard.KEY_H, "category.cvchelper");
+	// Key binding for opening the configuration GUI
+	private static KeyBinding openConfigGui = new KeyBinding("keyBinding.configGui", Keyboard.KEY_J, "category.cvchelper");
 	// Current position to display killstreak messages
 	private static GuiPosition currentGuiPos = GuiPosition.HOTBAR_LEFT;
 	
@@ -45,6 +50,12 @@ public class CvcHelper {
 	public static CvcHelperModule[] modules = {streakCounter, nadeCounter, firebombCounter};
 	
 	public static RenderGuiHandler guiHandler = new RenderGuiHandler();
+	
+	@EventHandler
+	public void preInit(FMLPreInitializationEvent event) {
+		ConfigHandler.init(event);
+		//ConfigHandler.syncConfig();
+	}
 	
 	/**
 	 * Initialize mod.
@@ -61,7 +72,8 @@ public class CvcHelper {
     		}
     	}
 
-    	ClientRegistry.registerKeyBinding(keyChangeGuiPos);
+    	ClientRegistry.registerKeyBinding(changeGuiPos);
+    	ClientRegistry.registerKeyBinding(openConfigGui);
     	MinecraftForge.EVENT_BUS.register(new KeyHandler());
 	}
     
@@ -140,6 +152,14 @@ public class CvcHelper {
 			module.reset();
 		}
     }
+    
+    @SubscribeEvent
+	 public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
+		 if (event.modID.equals(Reference.MOD_ID)) {
+			 ConfigHandler.syncConfig();
+			 mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_GREEN + "CvC Helper settings updated." + EnumChatFormatting.RESET));
+		 }
+	 }
 
     /**
      * Prints the current streak in chat.
@@ -154,8 +174,17 @@ public class CvcHelper {
      * @return KeyBinding - key used to change the position of messages
      */
     public static KeyBinding getGuiPosKeyBinding() {
-    	return keyChangeGuiPos;
+    	return changeGuiPos;
     }
+    
+    /**
+     * Getter for the openConfigGui key binding.
+     * 
+     * @return KeyBinding - key used to open the configuration menu
+     */
+    public static KeyBinding getOpenConfigKeyBinding() {
+		return openConfigGui;
+	}
 
     /**
      * Getter for the current position messages will be displayed.

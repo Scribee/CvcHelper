@@ -1,2 +1,4 @@
-keyBinding.guiPos=Change killstreak message position
+keyBinding.guiPos=Change Killstreak Message Position
+keyBinding.configGui=Open Configuration Menu
 category.cvchelper=CvC Helper
+gui.config.modules=Module Settings

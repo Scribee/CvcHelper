@@ -7,7 +7,8 @@ public class Reference {
 	/* MOD INFO */
 	public static final String MOD_ID = "cvchelper";
 	public static final String MOD_NAME = "CvC Helper";
-	public static final String VERSION = "1.3";
+	public static final String VERSION = "dev-1.4";
+	public static final String GUI_FACTORY_PATH = "scribee.cvchelper.gui.CvcHelperGuiFactory";
 	
 	/* SPECIAL CHARACTERS */
 	public static final String S = String.valueOf('\u00a7'); // section symbol used by minecraft for text formatting

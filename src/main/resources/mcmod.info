@@ -5,7 +5,7 @@
   "description": "Provides several quality-of-life functions for Cops and Crims games.\n - Counts your killstreaks per weapon\n - Notifies you when you can reselect grenades in TDM",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "",
+  "url": "https://github.com/Scribee/CvcHelper#cvchelper-189",
   "updateUrl": "",
   "authorList": ["Scribee"],
   "credits": "",
