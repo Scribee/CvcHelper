@@ -98,6 +98,6 @@ public class StreakDisplay extends CvcHelperModule {
 
 	@Override
 	public GuiPosition getGuiPosition() {
-		return isEnabled() ? CvcHelper.getCurrentGuiPos() : GuiPosition.NONE;
+		return CvcHelper.getCurrentGuiPos();
 	}
 }

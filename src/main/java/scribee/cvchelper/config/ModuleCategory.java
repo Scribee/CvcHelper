@@ -27,9 +27,7 @@ public class ModuleCategory extends CategoryEntry {
 		List<IConfigElement> elements = new ArrayList<IConfigElement>();
 
 		elements.addAll((new ConfigElement(ConfigHandler.config.getCategory(ConfigHandler.CATEGORY_MODULES.toLowerCase()))).getChildElements());
-		
-		System.out.println("Module category config elements: " + elements.toString());
-		
+				
 		return new GuiConfig(this.owningScreen,
 				elements,
 				Reference.MOD_ID,

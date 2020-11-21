@@ -71,7 +71,15 @@ public class CvcHelperGui extends Gui {
 		case CROSSHAIR_LEFT:
 			x = (res.getScaledWidth() / 2) - 4 - 2 - 7; // center - crosshair width/2 - buffer - grenade symbol width
 			y = (res.getScaledHeight() / 2) - 4;
-			break;	
+			break;
+		case CROSSHAIR_ABOVE:
+			x = (res.getScaledWidth() / 2) - 3; // center - symbol width / 2
+			y = (res.getScaledHeight() / 2) - 4 - 2 - TEXT_HEIGHT; // center - crosshair height / 2 - buffer - symbol height
+			break;
+		case CROSSHAIR_BELOW:
+			x = (res.getScaledWidth() / 2) - 3;
+			y = (res.getScaledHeight() / 2) + 4 + 2;
+			break;
 		default:
 			System.out.println("Unknown position");
 			break;

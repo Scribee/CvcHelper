@@ -15,13 +15,15 @@ public class ItemCountdown extends CvcHelperModule {
 	private int cooldownTicks = 0;
 	private String itemSymbol;
 	private GuiPosition pos;
+	private String name;
 	
 	/**
 	 * Default constructor for a new GrenadeCountdown.
 	 */
-	public ItemCountdown(String symbol, GuiPosition position) {
+	public ItemCountdown(String symbol, GuiPosition position, String itemName) {
 		itemSymbol = symbol;
 		pos = position;
+		name = itemName;
 	}
 
 	/**
@@ -68,7 +70,7 @@ public class ItemCountdown extends CvcHelperModule {
 	 * @return String - message to be displayed to the user notifying them that they can reselect the grenade
 	 */
 	@Override
-	public String getMessage() {
+	public String getMessage() {		
 		if (!onCooldown && inGame && isEnabled()) {
 			return itemSymbol;
 		}
@@ -84,6 +86,10 @@ public class ItemCountdown extends CvcHelperModule {
 
 	@Override
 	public GuiPosition getGuiPosition() {
-		return isEnabled() ? pos : GuiPosition.NONE;
+		return pos;
+	}
+	
+	public String getName() {
+		return name;
 	}
 }

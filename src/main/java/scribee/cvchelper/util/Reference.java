@@ -7,7 +7,7 @@ public class Reference {
 	/* MOD INFO */
 	public static final String MOD_ID = "cvchelper";
 	public static final String MOD_NAME = "CvC Helper";
-	public static final String VERSION = "1.4";
+	public static final String VERSION = "1.5";
 	public static final String GUI_FACTORY_PATH = "scribee.cvchelper.gui.CvcHelperGuiFactory";
 	
 	/* SPECIAL CHARACTERS */
@@ -21,7 +21,12 @@ public class Reference {
 	public static final String HEADSHOT = String.valueOf('\u9270');
 	public static final String SYMBOL_GRENADE = String.valueOf('\u9283');
 	public static final String SYMBOL_FIREBOMB = String.valueOf('\u9279');
+	public static final String SYMBOL_FLASHBANG = String.valueOf('\u9277');
 	
 	/* CONSTANTS */
 	public static final int THROWABLE_COOLDOWN = 90; // TDM grenade cooldown in seconds
+	public static final String NAME_GRENADE = "Frag Grenade";
+	public static final String NAME_FLASHBANG = "Flashbang";
+	public static final String NAME_FIREBOMB = "Firebomb";
+	
 }
